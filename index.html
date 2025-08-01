@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServerFree.com - Servidores Minecraft Gratuitos 24/7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .dashboard {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .server-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .server-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .server-status {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f44336;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.online {
+            background: #4CAF50;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .server-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .features {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">ServerFree.com</div>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#servers">Servidores</a></li>
+                <li><a href="#support">Suporte</a></li>
+                <li><a href="#pricing">Planos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>🎮 ServerFree.com</h1>
+            <p>Crie servidores Minecraft Java e Bedrock gratuitos com uptime 24/7, mods e cheats ativados!</p>
+        </div>
+
+        <div class="dashboard">
+            <h2>🚀 Painel de Controle do Servidor</h2>
+            
+            <div class="server-tabs">
+                <button class="tab-btn active" onclick="switchTab('java')">Minecraft Java</button>
+                <button class="tab-btn" onclick="switchTab('bedrock')">Minecraft Bedrock</button>
+            </div>
+
+            <div class="server-form">
+                <div class="form-group">
+                    <label for="serverName">Nome do Servidor</label>
+                    <input type="text" id="serverName" placeholder="Meu Servidor Incrível" value="SurvivalCraft Server">
+                </div>
+
+                <div class="form-group">
+                    <label for="serverIP">IP Personalizado</label>
+                    <input type="text" id="serverIP" placeholder="meuservidor.serverfree.com" value="survivalcraft.zack.me">
+                </div>
+
+                <div class="form-group">
+                    <label for="serverPort">Porta</label>
+                    <input type="number" id="serverPort" placeholder="25565" value="2000">
+                </div>
+
+                <div class="form-group">
+                    <label for="serverVersion">Versão do Minecraft</label>
+                    <select id="serverVersion">
+                        <option value="1.20.4">1.20.4 (Mais Recente)</option>
+                        <option value="1.20.1">1.20.1</option>
+                        <option value="1.19.4">1.19.4</option>
+                        <option value="1.18.2">1.18.2</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="seed">Seed do Mundo</label>
+                    <input type="text" id="seed" placeholder="Digite uma seed personalizada" value="-1232518340">
+                </div>
+
+                <div class="form-group">
+                    <label for="gamemode">Modo de Jogo</label>
+                    <select id="gamemode">
+                        <option value="survival">Sobrevivência</option>
+                        <option value="creative">Criativo</option>
+                        <option value="adventure">Aventura</option>
+                        <option value="spectator">Espectador</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="maxPlayers">Máximo de Jogadores</label>
+                    <input type="number" id="maxPlayers" placeholder="20" value="20">
+                </div>
+
+                <div class="form-group">
+                    <label for="difficulty">Dificuldade</label>
+                    <select id="difficulty">
+                        <option value="easy">Fácil</option>
+                        <option value="normal">Normal</option>
+                        <option value="hard">Difícil</option>
+                        <option value="hardcore">Hardcore</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Configurações Avançadas</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="cheats" checked>
+                        <label for="cheats">Ativar Cheats/Comandos</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="pvp" checked>
+                        <label for="pvp">PvP Ativado</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="whitelist">
+                        <label for="whitelist">Lista Branca</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="mods" checked>
+                        <label for="mods">Suporte a Mods</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="operators">Operadores (OPs)</label>
+                    <textarea id="operators" placeholder="Digite os nomes dos jogadores (um por linha)" rows="3">FreitasPlay1770</textarea>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="createServer()">🚀 Criar Servidor</button>
+                <button class="btn btn-success" onclick="startServer()">▶️ Iniciar Servidor</button>
+                <button class="btn btn-danger" onclick="stopServer()">⏹️ Parar Servidor</button>
+                <button class="btn btn-warning" onclick="restartServer()">🔄 Reiniciar</button>
+            </div>
+
+            <div class="server-status">
+                <h3>📊 Status do Servidor</h3>
+                <div class="status-indicator">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Servidor Offline</span>
+                </div>
+                
+                <div class="server-info">
+                    <div class="info-card">
+                        <h4>🌐 IP do Servidor</h4>
+                        <p id="displayIP">survivalcraft.zack.me:2000</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>👥 Jogadores Online</h4>
+                        <p id="playersOnline">0/20</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>⏱️ Uptime</h4>
+                        <p id="uptime">00:00:00</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🧠 Uso de RAM</h4>
+                        <p id="ramUsage">512MB / 2GB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>✨ Recursos Incríveis</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3>Suporte a Mods</h3>
+                    <p>Instale mods Forge, Fabric e plugins facilmente</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌙</div>
+                    <h3>24/7 Online</h3>
+                    <p>Seu servidor ficará online 24 horas por dia</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Alta Performance</h3>
+                    <p>Servidores otimizados com SSD e alta velocidade</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Anti-DDoS</h3>
+                    <p>Proteção completa contra ataques DDoS</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Java & Bedrock</h3>
+                    <p>Suporte completo para ambas as versões</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>100% Gratuito</h3>
+                    <p>Sem taxas ocultas ou limitações de tempo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let serverOnline = false;
+        let uptime = 0;
+        let uptimeInterval;
+
+        function switchTab(type) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (type === 'bedrock') {
+                document.getElementById('serverPort').value = '19132';
+            } else {
+                document.getElementById('serverPort').value = '2000';
+            }
+        }
+
+        function createServer() {
+            const serverName = document.getElementById('serverName').value;
+            const serverIP = document.getElementById('serverIP').value;
+            const port = document.getElementById('serverPort').value;
+            
+            if (!serverName || !serverIP) {
+                alert('❌ Por favor, preencha o nome e IP do servidor!');
+                return;
+            }
+            
+            // Animação de criação
+            const btn = event.target;
+            btn.innerHTML = '⏳ Criando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '✅ Servidor Criado!';
+                btn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                
+                // Atualizar display do IP
+                document.getElementById('displayIP').textContent = `${serverIP}:${port}`;
+                
+                setTimeout(() => {
+                    btn.innerHTML = '🚀 Criar Servidor';
+                    btn.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                    btn.disabled = false;
+                }, 2000);
+            }, 2000);
+        }
+
+        function startServer() {
+            if (serverOnline) {
+                alert('⚠️ O servidor já está online!');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.innerHTML = '⏳ Iniciando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                serverOnline = true;
+                updateServerStatus();
+                startUptime();
+                
+                btn.innerHTML = '✅ Servidor Iniciado!';
+                setTimeout(() => {
+                    btn.innerHTML = '▶️ Iniciar Servidor';
+                    btn.disabled = false;
+                }, 2000);
+            }, 3000);
+        }
+
+        function stopServer() {
+            if (!serverOnline) {
+                alert('⚠️ O servidor já está offline!');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.innerHTML = '⏳ Parando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                serverOnline = false;
+                updateServerStatus();
+                stopUptime();
+                
+                btn.innerHTML = '✅ Servidor Parado!';
+                setTimeout(() => {
+                    btn.innerHTML = '⏹️ Parar Servidor';
+                    btn.disabled = false;
+                }, 2000);
+            }, 2000);
+        }
+
+        function restartServer() {
+            const btn = event.target;
+            btn.innerHTML = '⏳ Reiniciando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                if (serverOnline) {
+                    stopUptime();
+                    setTimeout(() => {
+                        startUptime();
+                    }, 1000);
+                }
+                
+                btn.innerHTML = '✅ Reiniciado!';
+                setTimeout(() => {
+                    btn.innerHTML = '🔄 Reiniciar';
+                    btn.disabled = false;
+                }, 2000);
+            }, 3000);
+        }
+
+        function updateServerStatus() {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const playersOnline = document.getElementById('playersOnline');
+            
+            if (serverOnline) {
+                statusDot.classList.add('online');
+                statusText.textContent = 'Servidor Online ✅';
+                playersOnline.textContent = `${Math.floor(Math.random() * 15) + 1}/20`;
+            } else {
+                statusDot.classList.remove('online');
+                statusText.textContent = 'Servidor Offline ❌';
+                playersOnline.textContent = '0/20';
+            }
+        }
+
+        function startUptime() {
+            uptime = 0;
+            uptimeInterval = setInterval(() => {
+                uptime++;
+                const hours = Math.floor(uptime / 3600).toString().padStart(2, '0');
+                const minutes = Math.floor((uptime % 3600) / 60).toString().padStart(2, '0');
+                const seconds = (uptime % 60).toString().padStart(2, '0');
+                document.getElementById('uptime').textContent = `${hours}:${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopUptime() {
+            if (uptimeInterval) {
+                clearInterval(uptimeInterval);
+                document.getElementById('uptime').textContent = '00:00:00';
+            }
+        }
+
+        // Simular uso de RAM aleatório
+        setInterval(() => {
+            const ramUsage = `${Math.floor(Math.random() * 1500) + 500}MB / 2GB`;
+            document.getElementById('ramUsage').textContent = ramUsage;
+        }, 5000);
+
+        // Atualizar jogadores online periodicamente quando servidor estiver online
+        setInterval(() => {
+            if (serverOnline) {
+                const players = Math.floor(Math.random() * 20) + 1;
+                document.getElementById('playersOnline').textContent = `${players}/20`;
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

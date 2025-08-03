@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .chat-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            height: 60%;
+            overflow-y: auto;
+        }
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .input-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .input-container button {
+            width: 15%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .input-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <!-- As falas da IA serão mostradas aqui -->
+        </div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+            <button onclick="enviarMensagem()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function enviarMensagem() {
+            const userInput = document.getElementById("userInput").value;
+            const chatBox = document.getElementById("chatBox");
+
+            if (userInput.trim() === "") return;
+
+            // Exibe a mensagem do usuário
+            const userMessage = document.createElement("p");
+            userMessage.textContent = "Você: " + userInput;
+            chatBox.appendChild(userMessage);
+
+            // Resposta da IA (você pode adicionar lógica para gerar respostas aqui)
+            const aiResponse = document.createElement("p");
+            aiResponse.textContent = "IA: " + gerarFala(); // Gera uma fala da IA
+            chatBox.appendChild(aiResponse);
+
+            // Rola para o final do chat
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Limpa o campo de entrada
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+</body>
+</html>

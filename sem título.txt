@@ -1,0 +1,2 @@
+<button onclick="criarMod()">Criar Mod</button>
+<button onclick="gerarSite()">Gerar Site</button>
